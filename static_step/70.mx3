@@ -25,7 +25,7 @@ B_ext = vector(0, 2100e-4, 0);
 relax();
 
 saveas(CropY(CropX(CropZ(B_eff, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 30*Difficulty, Ny - 30*Difficulty), "H_eff");
-saveas(CropY(CropX(CropZ(B_demag, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 30*Difficulty, (Ny-30)*Difficulty), "H_demag");
+saveas(CropY(CropX(CropZ(B_demag, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 30*Difficulty, Ny - 30*Difficulty), "H_demag");
 saveas(CropY(CropX(CropZ(B_ext, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 30*Difficulty, Ny - 30*Difficulty), "H_ext");
 saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
 saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_middle_ortho");
