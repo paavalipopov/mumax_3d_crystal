@@ -23,3 +23,4 @@ saveas(CropX(CropY(CropZ(B_eff, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx 
 saveas(CropX(CropY(CropZ(B_demag, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_demag");
 saveas(CropX(CropY(CropZ(B_ext, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_ext");
 saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");	
+saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_ortho");

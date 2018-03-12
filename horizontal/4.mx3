@@ -1,11 +1,11 @@
 LengthInt := 4;
-Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
+Difficulty := 4;; //как мелко будет разбиваться ячейка в 0,1 микрон
 Length := 0.1e-6 * LengthInt;
-Nx := (LengthInt + 60)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
+Nx := (LengthInt + 20)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
 Ny := 16;
 Nz := 8;
 
-sizeX := Length + 6e-6;
+sizeX := Length + 2e-6;
 sizeY := 3e-6;
 sizeZ := 20e-6;
 SetGridSize(Nx, Ny, Nz);
@@ -19,7 +19,8 @@ alpha = 0.002;
 B_ext = vector(0, 2100e-4, 0);
 relax();
 
-saveas(CropX(CropY(CropZ(B_eff, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_eff");
-saveas(CropX(CropY(CropZ(B_demag, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_demag");
-saveas(CropX(CropY(CropZ(B_ext, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_ext");
+saveas(CropX(CropY(CropZ(B_eff, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_eff");
+saveas(CropX(CropY(CropZ(B_demag, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_demag");
+saveas(CropX(CropY(CropZ(B_ext, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_ext");
 saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
+saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_ortho");
