@@ -1,5 +1,5 @@
-DepthInt := 6;
-Difficulty := 2;; //как мелко будет разбиваться ячейка в 0,1 микрон
+DepthInt := 10;
+Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
 Depth := 0.1e-6 * DepthInt;
 Nx := 200;
 Ny := (DepthInt + 70)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
@@ -16,11 +16,13 @@ bottomLayer := cuboid(sizeX*0.5 + 0.5e-6, 1e-6, sizeZ).transl(sizeX*0.25 - 0.25e
 //при Depth=0 - плоская пластина, при Depth = 1е-6 - ступенька в 1e-6, т.е. касание двух пластин
 //при Depth > 1е-6 появляется видимый вертикальный элемент
 stepShape := topLayer.add( middleLayer.add( bottomLayer ) );
+antenna := cuboid(0.5e-6, 1e-6, sizeZ).transl(-sizeX*0.5 + 0.25e-6, Depth*0.5, 0 );
 setgeom(stepShape);
+DefRegion(1, antenna);
 
 Msat = 1.39e5;
 m = uniform(0, 1, 0);
-alpha = 0.002;
+alpha = 0.001;
 B_ext = vector(0, 2100e-4, 0);
 relax();
 
@@ -30,4 +32,23 @@ saveas(CropY(CropX(CropZ(B_ext, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 30*Difficulty, Ny 
 saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
 saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_middle_ortho");
 saveas(CropX(B_eff, Nx/4, Nx/4+1), "H_eff_top_ortho");
+
+SaveAs(CropZ(m_full, Nz/2, Nz/2+1), "zero_m_full");
+f := 1e10;
+t = 1e-13;
+B_ext.SetRegion(1, vector(0, 2100e-4, 230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t) ));
+
+TableAdd(CropX(m_full, 3, 4));
+TableAdd(CropX(m_full, Nx/5, Nx/5 + 1));
+TableAdd(CropX(m_full, 2*Nx/5, 2*Nx/5 + 1));
+TableAdd(CropX(m_full, 3*Nx/5, 3*Nx/5 + 1));
+TableAdd(CropX(m_full, 4*Nx/5, 4*Nx/5 + 1));
+TableAdd(CropX(m_full, Nx - 4, Nx - 3));
+tableautosave(1e-11);
+
+autosave(CropZ(m_full, Nz/2, Nz/2 + 1), 1e-11);
+autosave(CropX(m_full, Nx/5, Nx/5 + 1), 1e-11);
+autosave(CropX(m_full, 4*Nx/5, 4*Nx/5 + 1), 1e-11);
+
+run(1.0e-8);
 
