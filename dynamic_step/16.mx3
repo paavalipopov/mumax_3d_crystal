@@ -1,4 +1,4 @@
-DepthInt := 5;
+DepthInt := 16;
 Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
 Depth := 0.1e-6 * DepthInt;
 Nx := 200;
