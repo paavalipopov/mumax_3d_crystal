@@ -5,7 +5,7 @@ Nx := 200;
 Ny := (DepthInt + 70)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
 Nz := 8;
 sizeX := 0.1e-6 * Nx;
-sizeY := 7e-6;
+sizeY := Depth + 7e-6;
 sizeZ := 20e-6;
 SetGridSize(Nx, Ny, Nz);
 SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);

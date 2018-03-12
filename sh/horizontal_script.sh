@@ -11,9 +11,11 @@ do
 	done
 
 	cd $dir
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output 'B_eff.png'; set grid; plot 'H_eff.gplot' using 1:5"
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output 'B_demag.png'; set grid; plot 'H_demag.gplot' using 1:5"
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output 'B_ext.png'; set grid; plot 'H_ext.gplot' using 1:5"
+	result=${PWD##*/}   
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff.png'; set grid; plot 'H_eff.gplot' using 1:5 with lines"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_demag.png'; set grid; plot 'H_demag.gplot' using 1:5 with lines"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext.png'; set grid; plot 'H_ext.gplot' using 1:5 with lines"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_full.png'; set size ratio -1; set grid; plot 'H_eff_full.gplot' using 1:2:5 with image"
 	cd $directory
 
 done
