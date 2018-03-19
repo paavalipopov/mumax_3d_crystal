@@ -1,0 +1,47 @@
+LengthInt := 250;
+Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
+Length := 0.1e-6 * LengthInt;
+Nx := (LengthInt + 60)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
+Ny := 32;
+Nz := 16;
+
+sizeX := Length + 6e-6;
+sizeY := 3e-6;
+sizeZ := 20e-6;
+SetGridSize(Nx, Ny, Nz);
+SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
+strip := cuboid(Length, 1e-6, sizeZ);
+setgeom(strip);
+
+Msat = 1.39e5;
+m = uniform(1, 0, 0);
+alpha = 0.001;
+B_ext = vector(2100e-4, 0, 0);
+relax();
+
+saveas(CropX(CropY(CropZ(B_eff, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_eff");
+saveas(CropX(CropY(CropZ(B_demag, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_demag");
+saveas(CropX(CropY(CropZ(B_ext, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 30*Difficulty, Nx - 30*Difficulty), "H_ext");
+saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
+saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_ortho");
+
+
+SaveAs(CropZ(m_full, Nz/2, Nz/2+1), "zero_m_full");
+SaveAs(CropX(m_full, 50, 51), "zero_m_full_beggining");
+SaveAs(CropX(m_full, Nx/2, Nx/2+1), "zero_m_full_middle");
+SaveAs(CropX(m_full, Nx-51, Nx-50), "zero_m_full_end");
+f := 6e9;
+t = 1e-13;
+B_ext.SetRegion(1, vector(2100e-4, 230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t), 0));
+
+TableAdd(CropX(m_full, 31, 32));
+TableAdd(CropX(m_full, Nx/2, Nx/2 + 1));
+TableAdd(CropX(m_full, Nx - 32, Nx - 31));
+tableautosave(1e-11);
+
+autosave(CropZ(m_full, Nz/2, Nz/2 + 1), 1e-11);
+autosave(CropX(m_full, 50, 51), 1e-11);
+autosave(CropX(m_full, Nx/2, Nx/2+1), 1e-11);
+autosave(CropX(m_full, Nx-51, Nx-50), 1e-11);
+
+run(1.0e-8);

@@ -3,7 +3,7 @@ Difficulty := 1;; //как мелко будет разбиваться ячей
 Depth := 0.1e-6 * DepthInt;
 Nx := 100;
 Ny := (DepthInt + 30)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
-Nz := 16;
+Nz := 32;
 sizeX := 0.1e-6 * Nx;
 sizeY := Depth + 3e-6;
 sizeZ := 20e-6;
@@ -38,7 +38,7 @@ SaveAs(CropX(m_full, Nx/5, Nx/5 + 1), "zero_m_full_top");
 SaveAs(CropX(m_full, 4*Nx/5, 4*Nx/5 + 1), "zero_m_full_bot");
 f := 6e9;
 t = 1e-13;
-B_ext.SetRegion(1, vector(0, 2100e-4, 230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t) ));
+B_ext.SetRegion(1, vector(230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t) , 2100e-4, 0));
 
 TableAdd(CropX(m_full, 1, 2));
 TableAdd(CropX(m_full, Nx/5, Nx/5 + 1));
