@@ -21,6 +21,7 @@ do
 		echo "$file"
 		echo " "
 		~/go/src/magEditor/manipulations $file $zerofile m
+		mumax3-convert -gplot $file
 	done
 	
 	
@@ -36,11 +37,12 @@ do
 		rm $file
 	done
 
-	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange4*.omf"`
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange2*.omf"`
 	do
 		echo "$file"
 		echo " "
 		~/go/src/magEditor/manipulations $file $zerofile m
+		mumax3-convert -gplot $file
 	done
 	
 	
@@ -50,7 +52,7 @@ do
 	rm $zerofile
 	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_full_bot.omf")
 	
-	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange16*.ovf"`	
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange8*.ovf"`	
 	do
   		mumax3-convert -omf text $file
 		rm $file
@@ -61,6 +63,7 @@ do
 		echo "$file"
 		echo " "
 		~/go/src/magEditor/manipulations $file $zerofile m
+		mumax3-convert -gplot $file
 	done
 	
 done

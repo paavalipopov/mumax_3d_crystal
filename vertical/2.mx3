@@ -2,8 +2,8 @@ LengthInt := 2;
 Difficulty := 2;; //как мелко будет разбиваться ячейка в 0,1 микрон
 Length := 0.1e-6 * LengthInt;
 Nx := (LengthInt + 20)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
-Ny := 16;
-Nz := 8;
+Ny := 32;
+Nz := 16;
 
 sizeX := Length + 6e-6;
 sizeY := 3e-6;
@@ -15,7 +15,7 @@ setgeom(strip);
 
 Msat = 1.39e5;
 m = uniform(1, 0, 0);
-alpha = 0.002;
+alpha = 0.001;
 B_ext = vector(2100e-4, 0, 0);
 relax();
 

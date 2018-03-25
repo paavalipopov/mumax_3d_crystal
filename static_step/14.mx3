@@ -3,7 +3,7 @@ Difficulty := 1;; //как мелко будет разбиваться ячей
 Depth := 0.1e-6 * DepthInt;
 Nx := 200;
 Ny := (DepthInt + 70)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
-Nz := 8;
+Nz := 16;
 sizeX := 0.1e-6 * Nx;
 sizeY := Depth + 7e-6;
 sizeZ := 20e-6;
@@ -20,7 +20,7 @@ setgeom(stepShape);
 
 Msat = 1.39e5;
 m = uniform(0, 1, 0);
-alpha = 0.002;
+alpha = 0.001;
 B_ext = vector(0, 2100e-4, 0);
 relax();
 
