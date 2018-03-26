@@ -14,6 +14,7 @@ do
   		mumax3-fft $file
 	done
 
+	#set xrange [0:8e9]
 	cd $dir
 	result=${PWD##*/}  
 	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff.png'; set grid; plot 'H_eff.gplot' using 2:5"

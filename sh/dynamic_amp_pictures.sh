@@ -10,7 +10,7 @@ do
 	set cbrange [0.01:10000];
 	set grid;
 	set logscale cb 10;
-	do for [i=1:829] {
+	do for [i=1:1000] {
 	infile = sprintf('m_full_zrange16_%06.0f.gplot',i);
     	outfile = sprintf('$result amp_picture_%03.0f.png',i);
     	set output outfile;

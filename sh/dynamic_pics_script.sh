@@ -10,13 +10,13 @@ do
 	rm $zerofile
 	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_full.omf")
 
-	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange*.ovf"`	
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange16*.ovf"`	
 	do
   		mumax3-convert -omf text $file
 		rm $file
 	done
 
-	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange*.omf"`
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange16*.omf"`
 	do
 		echo "$file"
 		echo " "
@@ -26,12 +26,57 @@ do
 	
 	
 	
+	
+	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_left.ovf")
+	mumax3-convert -omf text $zerofile
+	rm $zerofile
+	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_left.omf")
+
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange2_*.ovf"`	
+	do
+  		mumax3-convert -omf text $file
+		rm $file
+	done
+
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange2_*.omf"`
+	do
+		echo "$file"
+		echo " "
+		~/go/src/magEditor/manipulations $file $zerofile m
+		mumax3-convert -gplot $file
+	done
+	
+	
+	
+	
+	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_right.ovf")
+	mumax3-convert -omf text $zerofile
+	rm $zerofile
+	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_right.omf")
+
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange29*.ovf"`	
+	do
+  		mumax3-convert -omf text $file
+		rm $file
+	done
+
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_zrange29*.omf"`
+	do
+		echo "$file"
+		echo " "
+		~/go/src/magEditor/manipulations $file $zerofile m
+		mumax3-convert -gplot $file
+	done
+	
+
+	
+	
 	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_full_top.ovf")
 	mumax3-convert -omf text $zerofile
 	rm $zerofile
 	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_full_top.omf")
 	
-	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange4*.ovf"`	
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange2*.ovf"`	
 	do
   		mumax3-convert -omf text $file
 		rm $file
@@ -58,7 +103,7 @@ do
 		rm $file
 	done
 
-	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange16*.omf"`
+	for file in `find $dir -maxdepth 1 -type f -name "m_full_xrange8*.omf"`
 	do
 		echo "$file"
 		echo " "

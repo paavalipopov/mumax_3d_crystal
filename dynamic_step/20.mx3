@@ -2,7 +2,7 @@ DepthInt := 20;
 Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
 Depth := 0.1e-6 * DepthInt;
 Nx := 100;
-Ny := (DepthInt + 30)*Difficulty; //по краям будет оступление по 3 микрона, плюс минимально возможная толщина пластины в 1 микрон
+Ny := (DepthInt + 30)*Difficulty; //по краям будет оступление по 1 микрон, плюс минимально возможная толщина пластины в 1 микрон
 Nz := 32;
 sizeX := 0.1e-6 * Nx;
 sizeY := Depth + 3e-6;
@@ -33,11 +33,17 @@ saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
 saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_middle_ortho");
 saveas(CropX(B_eff, Nx/4, Nx/4+1), "H_eff_top_ortho");
 
+
 SaveAs(CropZ(m_full, Nz/2, Nz/2+1), "zero_m_full");
+SaveAs(CropZ(m_full, 2, 3), "zero_m_left");
+SaveAs(CropZ(m_full, Nz-3, Nz-2), "zero_m_right");
+
 SaveAs(CropX(m_full, Nx/5, Nx/5 + 1), "zero_m_full_top");
 SaveAs(CropX(m_full, 4*Nx/5, 4*Nx/5 + 1), "zero_m_full_bot");
+
 f := 6e9;
 t = 1e-13;
+FixDt = 1e-11;
 B_ext.SetRegion(1, vector(230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t) , 2100e-4, 0));
 
 TableAdd(CropX(m_full, 1, 2));
@@ -49,8 +55,11 @@ TableAdd(CropX(m_full, Nx - 2, Nx - 1));
 tableautosave(1e-11);
 
 autosave(CropZ(m_full, Nz/2, Nz/2 + 1), 1e-11);
+autosave(CropZ(m_full, 2, 3), 1e-11);
+autosave(CropZ(m_full, Nz-3, Nz-2), 1e-11);
 autosave(CropX(m_full, Nx/5, Nx/5 + 1), 1e-11);
 autosave(CropX(m_full, 4*Nx/5, 4*Nx/5 + 1), 1e-11);
 
 run(1.0e-8);
+
 
