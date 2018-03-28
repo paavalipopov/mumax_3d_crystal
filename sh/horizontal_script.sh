@@ -33,21 +33,24 @@ do
 	cd $dir
 	result=${PWD##*/}  
 
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_x_beg.png'; set grid; plot 'table_fft.txt' every ::1 using 1:5 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_x_mid.png'; set grid; plot 'table_fft.txt' every ::1 using 1:8 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_x_end.png'; set grid; plot 'table_fft.txt' every ::1 using 1:11 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_x_all.png'; set grid; plot 'table_fft.txt' every ::1 using 1:5 with lines, 'table_fft.txt' every ::1 using 1:8 with lines, 'table_fft.txt' every ::1 using 1:11 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_x_beg.png'; set grid; plot 'table_fft.txt' every ::1 using 1:5 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_x_mid.png'; set grid; plot 'table_fft.txt' every ::1 using 1:8 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_x_end.png'; set grid; plot 'table_fft.txt' every ::1 using 1:11 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_x_all.png'; set grid; plot 'table_fft.txt' every ::1 using 1:5 with lines, 'table_fft.txt' every ::1 using 1:8 with lines, 'table_fft.txt' every ::1 using 1:11 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_x_passing.png'; set grid; plot 'table_fft.txt' every ::1 using 1:(column(11)/column(5)) with lines"
 
 
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_y_beg.png'; set grid; plot 'table_fft.txt' every ::1 using 1:6 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_y_mid.png'; set grid; plot 'table_fft.txt' every ::1 using 1:9 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_y_end.png'; set grid; plot 'table_fft.txt' every ::1 using 1:12 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_y_all.png'; set grid; plot 'table_fft.txt' every ::1 using 1:6 with lines, 'table_fft.txt' every ::1 using 1:9 with lines, 'table_fft.txt' every ::1 using 1:12 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_y_beg.png'; set grid; plot 'table_fft.txt' every ::1 using 1:6 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_y_mid.png'; set grid; plot 'table_fft.txt' every ::1 using 1:9 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_y_end.png'; set grid; plot 'table_fft.txt' every ::1 using 1:12 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_y_all.png'; set grid; plot 'table_fft.txt' every ::1 using 1:6 with lines, 'table_fft.txt' every ::1 using 1:9 with lines, 'table_fft.txt' every ::1 using 1:12 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_y_passing.png'; set grid; plot 'table_fft.txt' every ::1 using 1:(column(12)/column(6)) with lines"
 
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_z_beg.png'; set grid; plot 'table_fft.txt' every ::1 using 1:7 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_z_mid.png'; set grid; plot 'table_fft.txt' every ::1 using 1:10 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_z_end.png'; set grid; plot 'table_fft.txt' every ::1 using 1:13 with lines"
-	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result AFR_z_all.png'; set grid; plot 'table_fft.txt' every ::1 using 1:7 with lines, 'table_fft.txt' every ::1 using 1:10 with lines, 'table_fft.txt' every ::1 using 1:13 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_z_beg.png'; set grid; plot 'table_fft.txt' every ::1 using 1:7 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_z_mid.png'; set grid; plot 'table_fft.txt' every ::1 using 1:10 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_z_end.png'; set grid; plot 'table_fft.txt' every ::1 using 1:13 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_z_all.png'; set grid; plot 'table_fft.txt' every ::1 using 1:7 with lines, 'table_fft.txt' every ::1 using 1:10 with lines, 'table_fft.txt' every ::1 using 1:13 with lines"
+	gnuplot -e "set logscale y 10; set terminal png size 1280,980 enhanced font 'Helvetica,20'; set xrange [5e8:7e9]; set output '$result AFR_z_passing.png'; set grid; plot 'table_fft.txt' every ::1 using 1:(column(13)/column(7)) with lines"
 
 	zerofile=$(find $dir -maxdepth 1 -type f -name "zero_m_full.ovf")
 	mumax3-convert -omf text $zerofile

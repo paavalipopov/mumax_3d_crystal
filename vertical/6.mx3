@@ -5,7 +5,7 @@ Nx := (LengthInt + 20)*Difficulty; //по краям будет оступлен
 Ny := 32;
 Nz := 16;
 
-sizeX := Length + 6e-6;
+sizeX := Length + 2e-6;
 sizeY := 3e-6;
 sizeZ := 20e-6;
 SetGridSize(Nx, Ny, Nz);
