@@ -10,13 +10,15 @@ do
   		mumax3-convert -gplot $file
 	done
 
+	 gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff_all.png'; set yrange [0.02:0.25]; set grid; plot '/media/data/mumax_work/vertical/2.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/4.out/H_eff.gplot'  using 1:4 with lines, '/media/data/mumax_work/vertical/6.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/10.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/14.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/20.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/30.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/100.out/H_eff.gplot' using 1:4 with lines, '/media/data/mumax_work/vertical/250.out/H_eff.gplot' using 1:4 with lines"
+
 	cd $dir
 	result=${PWD##*/}  
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff.png'; set yrange [0.02:025]; set grid; plot 'H_eff.gplot' using 1:4 with lines"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff.png'; set yrange [0.02:0.25]; set grid; plot 'H_eff.gplot' using 1:4 with lines"
 	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_demag.png'; set grid; plot 'H_demag.gplot' using 1:4 with lines"
 	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext.png'; set grid; plot 'H_ext.gplot' using 1:4 with lines"
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_full.png'; set cbrange [0.02:025]; set size ratio -1; set grid; plot 'H_eff_full.gplot' using 1:2:4 with image"
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_ortho.png'; set cbrange [0.02:025]; set size ratio -1; set grid; plot 'H_eff_ortho.gplot' using 2:3:4 with image"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_full.png'; set cbrange [0.02:0.25]; set size ratio -1; set grid; plot 'H_eff_full.gplot' using 1:2:4 with image"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_ortho.png'; set cbrange [0.02:0.25]; set size ratio -1; set grid; plot 'H_eff_ortho.gplot' using 2:3:4 with image"
 	cd $directory
 
 done

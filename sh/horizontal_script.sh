@@ -9,14 +9,19 @@ do
 	do
   		mumax3-convert -gplot $file
 	done
+	
+	 gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff_all.png'; set yrange [0.02:0.25]; set grid; plot '/media/data/mumax_work/horizontal/10.out/H_eff.gplot' using 1:5 with lines, '/media/data/mumax_work/horizontal/20.out/H_eff.gplot'  using 1:5 with lines, '/media/data/mumax_work/horizontal/50.out/H_eff.gplot' using 1:5 with lines, '/media/data/mumax_work/horizontal/200.out/H_eff.gplot' using 1:5 with lines"
 
 	cd $dir
 	result=${PWD##*/}   
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff.png'; set yrange [0.02:025]; set grid; plot 'H_eff.gplot' using 1:5 with lines"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_eff.png'; set yrange [0.02:0.25]; set grid; plot 'H_eff.gplot' using 1:5 with lines"
 	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_demag.png'; set grid; plot 'H_demag.gplot' using 1:5 with lines"
 	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext.png'; set grid; plot 'H_ext.gplot' using 1:5 with lines"
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_full.png'; set size ratio -1; set cbrange [0.02:025]; set grid; plot 'H_eff_full.gplot' using 1:2:5 with image"
-	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_ortho.png'; set size ratio -1; set cbrange [0.02:025]; set grid; plot 'H_eff_ortho.gplot' using 2:3:5 with image"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_full.png'; set size ratio -1; set cbrange [0.02:0.25]; set grid; plot 'H_eff_full.gplot' using 1:2:5 with image"
+	gnuplot -e "set terminal png size 1280,980 enhanced font 'Helvetica,20'; set output '$result B_ext_ortho.png'; set size ratio -1; set cbrange [0.02:0.25]; set grid; plot 'H_eff_ortho.gplot' using 2:3:5 with image"
+
+"
+
 	cd $directory
 
 	

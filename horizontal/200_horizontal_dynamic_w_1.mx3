@@ -1,4 +1,4 @@
-LengthInt := 250;
+LengthInt := 200;
 Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
 Length := 0.1e-6 * LengthInt;
 Nx := (LengthInt + 20)*Difficulty; //по краям будет оступление по 1 микрон
@@ -16,9 +16,9 @@ setgeom(strip);
 DefRegion(1, antenna);
 
 Msat = 1.39e5;
-m = uniform(1, 0, 0);
+m = uniform(0, 1, 0);
 alpha = 0.001;
-B_ext = vector(2100e-4, 0, 0);
+B_ext = vector(0, 2100e-4, 0);
 relax();
 
 saveas(CropX(CropY(CropZ(B_eff, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_eff");
@@ -32,9 +32,9 @@ SaveAs(CropZ(m_full, Nz/2, Nz/2+1), "zero_m_full");
 SaveAs(CropX(m_full, 50, 51), "zero_m_full_beggining");
 SaveAs(CropX(m_full, Nx/2, Nx/2+1), "zero_m_full_middle");
 SaveAs(CropX(m_full, Nx-51, Nx-50), "zero_m_full_end");
-f := 9e9;
+f := 6e9;
 t = 1e-13;
-B_ext.SetRegion(1, vector(2100e-4, 230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t), 0));
+B_ext.SetRegion(1, vector(230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t) , 2100e-4, 0));
 
 TableAdd(CropX(m_full, 31, 32));
 TableAdd(CropX(m_full, Nx/2, Nx/2 + 1));
