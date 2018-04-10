@@ -1,0 +1,65 @@
+DepthInt := 150;
+Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
+Depth := 0.1e-6 * DepthInt;
+Nx := 100;
+Ny := (DepthInt + 30)*Difficulty; //по краям будет оступление по 1 микрон, плюс минимально возможная толщина пластины в 1 микрон
+Nz := 32;
+sizeX := 0.1e-6 * Nx;
+sizeY := Depth + 3e-6;
+sizeZ := 20e-6;
+SetGridSize(Nx, Ny, Nz);
+SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
+
+topLayer := cuboid(sizeX*0.5 + 0.5e-6, 1e-6, sizeZ).transl(-sizeX*0.25 + 0.25e-6, Depth*0.5, 0 );
+middleLayer := cuboid(1e-6, Depth, sizeZ);
+bottomLayer := cuboid(sizeX*0.5 + 0.5e-6, 1e-6, sizeZ).transl(sizeX*0.25 - 0.25e-6, -Depth*0.5, 0 ); 
+//при Depth=0 - плоская пластина, при Depth = 1е-6 - ступенька в 1e-6, т.е. касание двух пластин
+//при Depth > 1е-6 появляется видимый вертикальный элемент
+stepShape := topLayer.add( middleLayer.add( bottomLayer ) );
+antenna := cuboid(0.5e-6, 1e-6, sizeZ).transl(-sizeX*0.5 + 0.25e-6, Depth*0.5, 0 );
+setgeom(stepShape);
+DefRegion(1, antenna);
+
+Msat = 1.39e5;
+m = uniform(0, 1, 0);
+alpha = 0.004;
+B_ext = vector(0, 2100e-4, 0);
+relax();
+
+saveas(CropY(CropX(CropZ(B_eff, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 10*Difficulty, Ny - 10*Difficulty), "H_eff");
+saveas(CropY(CropX(CropZ(B_demag, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 10*Difficulty, Ny - 10*Difficulty), "H_demag");
+saveas(CropY(CropX(CropZ(B_ext, Nz/2, Nz/2+1), Nx/2, Nx/2+1), 10*Difficulty, Ny - 10*Difficulty), "H_ext");
+saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
+saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_middle_ortho");
+saveas(CropX(B_eff, Nx/4, Nx/4+1), "H_eff_top_ortho");
+
+
+SaveAs(CropZ(B_eff, Nz/2, Nz/2+1), "zero_m_full");
+SaveAs(CropZ(B_eff, 2, 3), "zero_m_left");
+SaveAs(CropZ(B_eff, Nz-3, Nz-2), "zero_m_right");
+
+SaveAs(CropX(B_eff, Nx/5, Nx/5 + 1), "zero_m_full_top");
+SaveAs(CropX(B_eff, 4*Nx/5, 4*Nx/5 + 1), "zero_m_full_bot");
+
+f := 6e9;
+t = 1e-13;
+FixDt = 1e-11;
+B_ext.SetRegion(1, vector(230e-4 * sin(2.0*pi*f*t) / (2.0*pi*f*t) , 2100e-4, 0));
+
+TableAdd(CropX(B_eff, 1, 2));
+TableAdd(CropX(B_eff, Nx/5, Nx/5 + 1));
+TableAdd(CropX(B_eff, 2*Nx/5, 2*Nx/5 + 1));
+TableAdd(CropX(B_eff, 3*Nx/5, 3*Nx/5 + 1));
+TableAdd(CropX(B_eff, 4*Nx/5, 4*Nx/5 + 1));
+TableAdd(CropX(B_eff, Nx - 2, Nx - 1));
+tableautosave(1e-11);
+
+autosave(CropZ(B_eff, Nz/2, Nz/2 + 1), 1e-11);
+autosave(CropZ(B_eff, 2, 3), 1e-11);
+autosave(CropZ(B_eff, Nz-3, Nz-2), 1e-11);
+autosave(CropX(B_eff, Nx/5, Nx/5 + 1), 1e-11);
+autosave(CropX(B_eff, 4*Nx/5, 4*Nx/5 + 1), 1e-11);
+
+run(1.0e-8);
+
+

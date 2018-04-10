@@ -7,7 +7,7 @@ Nz := 16;
 
 sizeX := Length + 2e-6;
 sizeY := 3e-6;
-sizeZ := 20e-6;
+sizeZ := 1e-6;
 SetGridSize(Nx, Ny, Nz);
 SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
 strip := cuboid(Length, 1e-6, sizeZ);

@@ -11,7 +11,7 @@ do
 	set grid;
 	set logscale cb 10;
 	do for [i=1:1000] {
-	infile = sprintf('m_full_zrange16_%06.0f.gplot',i);
+	infile = sprintf('B_eff_zrange16_%06.0f.gplot',i);
     	outfile = sprintf('$result amp_picture_%03.0f.png',i);
     	set output outfile;
 	plot infile using 1:2:(sqrt(column(4)*column(4) + column(6)*column(6))) with image;
@@ -22,7 +22,7 @@ do
 	set grid;
 	set logscale cb 10;
 	do for [i=1:1000] {
-	infile = sprintf('m_full_zrange29_%06.0f.gplot',i);
+	infile = sprintf('B_eff_zrange29_%06.0f.gplot',i);
     	outfile = sprintf('$result amp_picture_right_%03.0f.png',i);
     	set output outfile;
 	plot infile using 1:2:(sqrt(column(4)*column(4) + column(6)*column(6))) with image;
@@ -33,7 +33,7 @@ do
 	set grid;
 	set logscale cb 10;
 	do for [i=1:1000] {
-	infile = sprintf('m_full_zrange2_%06.0f.gplot',i);
+	infile = sprintf('B_eff_zrange2_%06.0f.gplot',i);
     	outfile = sprintf('$result amp_picture_left_%03.0f.png',i);
     	set output outfile;
 	plot infile using 1:2:(sqrt(column(4)*column(4) + column(6)*column(6))) with image;
