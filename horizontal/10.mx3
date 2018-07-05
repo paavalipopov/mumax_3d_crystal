@@ -1,26 +1,22 @@
 LengthInt := 10;
-Difficulty := 1;; //как мелко будет разбиваться ячейка в 0,1 микрон
-Length := 0.1e-6 * LengthInt;
-Nx := (LengthInt + 20)*Difficulty; //по краям будет оступление по 1 микрон
-Ny := 32;
-Nz := 16;
-
+fineness := 20;
+Length := 1.0e-6 * LengthInt;
+Nx := (LengthInt + 2)*fineness; //по краям будет оступление по 1 микрон
+Ny := 16;
+Nz := 60;
 sizeX := Length + 2e-6;
-sizeY := 3e-6;
-sizeZ := 20e-6;
+sizeY := 20e-6;
+sizeZ := 3e-6;
 SetGridSize(Nx, Ny, Nz);
-SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
-strip := cuboid(Length, 1e-6, sizeZ);
+SetCellSize(1e-6/fineness, sizeY/Ny, sizeZ/Nz);
+strip := cuboid(Length, sizeY, 1e-6);
 setgeom(strip);
-
 Msat = 1.39e5;
-m = uniform(0, 1, 0);
+m = uniform(0, 0, 1);
 alpha = 0.001;
-B_ext = vector(0, 2100e-4, 0);
+B_ext = vector(0, 0, 2100e-4);
 relax();
-
-saveas(CropX(CropY(CropZ(B_eff, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_eff");
-saveas(CropX(CropY(CropZ(B_demag, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_demag");
-saveas(CropX(CropY(CropZ(B_ext, Nz/2, Nz/2+1), Ny/2, Ny/2+1), 10*Difficulty, Nx - 10*Difficulty), "H_ext");
-saveas(CropZ(B_eff, Nz/2, Nz/2+1), "H_eff_full");
-saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_ortho");
+saveas(CropX(CropZ(CropY(B_eff, Ny/2, Ny/2+1), Nz/2, Nz/2+1), fineness, Nx - fineness), "H_eff");
+saveas(CropX(CropZ(CropY(B_demag, Ny/2, Ny/2+1), Nz/2, Nz/2+1), fineness, Nx - fineness), "H_demag");
+saveas(CropX(CropZ(CropY(B_ext, Ny/2, Ny/2+1), Nz/2, Nz/2+1), fineness, Nx - fineness), "H_ext");
+saveas(CropY(B_eff, Ny/2, Ny/2+1), "H_eff_full");

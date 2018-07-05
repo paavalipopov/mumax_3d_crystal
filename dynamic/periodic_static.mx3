@@ -1,0 +1,54 @@
+// parameters of computational cell
+Nx := 2880;
+Ny := 13;
+Nz := 16;
+
+// расчетная область
+sizeX := 288.0e-6;
+sizeY := 1.3e-6;
+sizeZ := 40.0e-6;
+SetPBC(1, 0, 0)
+SetGridSize(Nx, Ny, Nz);
+SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
+EdgeSmooth = 8
+
+d := 1.0e-6;
+l1 := 10.0e-6;
+l2 := 10.0e-6;
+s := 0.3e-6;
+
+setgeom(imageShape("C:/Users/User/Desktop/mumax/periodic/periodic.png"));
+//для l1,2 = 10 mkm, d = 1 mkm, s = 0.4 mkm
+
+saveas(geom, "structure")
+
+//region for excitation
+DefRegion(1, cuboid(d, d, sizeZ).transl(-0.5 * sizeX + 9.0e-6, -0.5 * sizeY + 0.5 * d,0))
+
+//regions for increased damping
+DefRegion(2, cuboid(2.0e-6, d, sizeZ).transl(0.5 * sizeX - 1.0e-6, 0.5 * sizeY - 0.5 * d,0))
+DefRegion(3, cuboid(2.0e-6, d, sizeZ).transl(-0.5 * sizeX + 1.0e-6, 0.5 * sizeY - 0.5 * d,0))
+DefRegion(4, cuboid(2.0e-6, d, sizeZ).transl(0.5 * sizeX - 3.0e-6, 0.5 * sizeY - 0.5 * d,0))
+DefRegion(5, cuboid(2.0e-6, d, sizeZ).transl(-0.5 * sizeX + 3.0e-6, 0.5 * sizeY - 0.5 * d,0))
+DefRegion(6, cuboid(1.0e-6, sizeY, sizeZ).transl(0.5 * sizeX - 4.5e-6, 0,0))
+DefRegion(7, cuboid(1.0e-6, sizeY, sizeZ).transl(-0.5 * sizeX + 4.5e-6, 0,0))
+
+DefRegion(8, cuboid(d, d, sizeZ).transl(0.5 * sizeX - 9.0e-6, -0.5 * sizeY + 0.5 * d,0))
+
+save(regions)
+
+//parameters of YIG
+alpha = 0.09;
+Aex   = 3.614e-12;
+Msat  = 1.39e5;
+
+m=uniform(0, 1, 0);
+Bstat := 2100e-4;
+B_ext = vector(0, Bstat, 0);
+OutputFormat = OVF2_TEXT;
+relax();
+
+saveas(m, "groundstate_m")
+saveas(B_demag, "groundstate_b_demag")
+saveas(CropZ(B_eff, 7, 8), "groundstate_b")
+saveas(CropY(CropZ(B_eff, 7, 8), 6, 7), "groundstate_b_x")

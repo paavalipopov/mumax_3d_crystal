@@ -1,0 +1,47 @@
+segments := 40;
+Nx := 76*segments;
+Ny := 1;
+Nz := 32;
+
+l1 := 20.0e-6;
+l2 := 20.0e-6;
+d := 1.0e-6;
+period = l1 + l2 - 2*d;
+
+sizeX := (l1 + l2 - 2*d) * (segments+1);
+sizeY := 80.0e-6;
+sizeZ := 1.0e-6;
+SetGridSize(Nx, Ny, Nz);
+SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
+
+for i:= -segments/2; i <= segments/2; i++ {
+	DefRegion((i+segments/2)*5 + 1, cuboid(l1*0.5-d, sizeY, d).transl(period*i - l2*0.5 + d*0.5 - l1 * 0.25, 0, 0));
+	DefRegion((i+segments/2)*5 + 2, cuboid(d, sizeY, d).transl(period*i - l2*0.5 + d*0.5));
+	DefRegion((i+segments/2)*5 + 3, cuboid(l2*0.5-2*d, sizeY, d).transl(period*i, 0, 0));
+	DefRegion((i+segments/2)*5 + 4, cuboid(d, sizeY, d).transl(period*i + l2*0.5 - d*0.5));
+	DefRegion((i+segments/2)*5 + 5, cuboid(l1*0.5-d, sizeY, d).transl(period*i + l2*0.5 - d*0.5 + l1 * 0.25, 0, 0));
+}
+
+firstLayer := cuboid(sizeX*0.25 + 0.5e-6, sizeY, 1e-6).transl(-sizeX*3.0/8.0 + 0.25e-6, 0, Depth*0.5 );
+secondLayer := cuboid(sizeX*0.5 + 1.0e-6, sizeY, 1e-6).transl(0, 0, -Depth*0.5 );
+thirdLayer := cuboid(sizeX*0.25 + 0.5e-6, sizeY, 1e-6).transl(sizeX*3.0/8.0 - 0.25e-6, 0, Depth*0.5 );
+
+firstStep := cuboid(1.0e-6, sizeY, sizeZ).transl(-sizeX*0.25, 0, 0 );
+secondStep := cuboid(1.0e-6, sizeY, sizeZ).transl(sizeX*0.25, 0, 0 );
+
+
+stepShape := firstLayer.add( firstStep.add( secondLayer.add( secondStep.add( thirdLayer ) ) ) );
+antenna := cuboid(0.5e-6, 1e-6, sizeZ).transl(-sizeX*0.5 + 0.25e-6, Depth*0.5, 0 );
+setgeom(stepShape);
+DefRegion(1, antenna);
+
+Msat = 1.39e5;
+m = uniform(0, 0, 1);
+B_ext = vector(0, 0, 2100e-4);
+relax();
+
+OutputFormat = OVF2_TEXT;
+
+saveas(CropY(B_eff, Ny/2, Ny/2+1), "H_eff_full");
+saveas(CropX(B_eff, Nx/2, Nx/2+1), "H_eff_middle_ortho");
+

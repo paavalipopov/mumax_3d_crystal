@@ -1,0 +1,109 @@
+//YIG waveguide 12 May 2014
+
+// parameters of computational cell
+Nx :=2048// 1024
+Ny :=64 //256
+Nz := 16
+
+// расчетная область
+sizeX := 808.0e-6
+sizeY := 10.0e-6
+sizeZ := 10.0e-6
+SetPBC(8, 0, 8)
+SetGridSize(Nx, Ny, Nz)
+SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz)
+EdgeSmooth = 8
+
+// geometry
+//cuboid(sizeX, sizeY, sizeZ)
+// толщина волновода
+dw1:=1.0e-6
+// верхний левый
+//a:=cuboid(sizeX/8*3,dw1,sizeZ).transl(-sizeX/2+sizeX/8*3/2,sizeY/2-dw1/2,0)
+
+// верний правый
+//a1:=cuboid(sizeX/8*3,dw1,sizeZ).transl(sizeX/2-sizeX/8*3/2,sizeY/2-dw1/2,0)
+
+// нижний центральный
+//a2:=cuboid(sizeX/4,dw1,sizeZ).transl(0,-sizeY/2+dw1/2,0)
+
+// левый вертикальный
+//b:=cuboid(dw1,sizeY,sizeZ).transl(-sizeX/8-dw1/2,0,0)
+
+// правый вертикальный
+//b1:=cuboid(dw1,sizeY,sizeZ).transl(sizeX/8+dw1/2,0,0)
+
+
+
+//atemp:=a.add(a1)
+//atem2:=atemp.add(a2)
+//atem3:=atem2.add(b)
+//cc:=atem3.add(b1)
+//setgeom( cc )
+
+setgeom(imageShape("C:/Users/User/Desktop/mumax/zigzag.png"))
+
+saveas(geom, "yig")
+
+//regions for excitation
+padd:= 10e-6
+want:=1e-6
+DefRegion(1, cuboid(want, dw1, sizeZ).transl(-sizeX/2+padd,sizey/2-dw1/2,0))
+
+//regions for increased damping
+dsize1:=2.0e-6
+DefRegion(2, cuboid(dsize1, dw1, sizeZ).transl(sizeX/2-dsize1/2,sizey/2-dw1/2,0))
+DefRegion(3, cuboid(dsize1, dw1, sizeZ).transl(-sizeX/2+dsize1/2,sizey/2-dw1/2,0))
+dsize2:=2.0e-6
+DefRegion(4, cuboid(dsize2, dw1, sizeZ).transl(sizeX/2-dsize1-dsize2/2,sizey/2-dw1/2,0))
+DefRegion(5, cuboid(dsize2, dw1, sizeZ).transl(-sizeX/2+dsize1+dsize2/2,sizey/2-dw1/2,0))
+dsize3:=2.0e-6
+DefRegion(6, cuboid(dsize3, dw1, sizeZ).transl(sizeX/2-dsize1-dsize2-dsize3/2,sizey/2-dw1/2,0))
+DefRegion(7, cuboid(dsize3, dw1, sizeZ).transl(-sizeX/2+dsize1+dsize2+dsize3/2,sizey/2-dw1/2,0))
+
+save(regions)
+
+//parameters of YIG
+alpha = 0.09
+Aex   = 3.614e-12
+Msat  = 1.39e5
+
+//part for relax
+
+m=uniform(0, 0, 1)
+Bstat := 250e-4
+bb := 90
+B_ext = vector(0,0,Bstat)
+OutputFormat = OVF2_TEXT
+tableautosave(10e-12)
+run(5e-9)
+
+saveas(m, "groundstate_m")
+saveas(B_demag, "groundstate_b")
+
+//~PML~ 
+alpha = 0.0005
+alphazero:=0.05
+alpha.SetRegion(2, 15*alphazero)
+alpha.SetRegion(3, 15*alphazero)
+alpha.SetRegion(4, 10*alphazero)
+alpha.SetRegion(5, 10*alphazero)
+alpha.SetRegion(6, 1*alphazero)
+alpha.SetRegion(7, 1*alphazero)
+save(alpha)
+
+
+Amp := 5e-5
+//tau := 0.1e-9
+//tau := 50e-9
+t0 := 40e-9
+f0:=2.565e9
+df:=0.5851e9
+B_ext = vector(0.001E-4,0, Bstat)
+//B_ext.SetRegion(1, vector(0.001E-4+Amp*exp(-0.5 * pow((t-t0)/tau,2)),Bstat,0))
+//B_ext.SetRegion(1, vector(0.001E-4+Amp*tanh(0.5e8*t)*sin(2*pi*f*t),Bstat,0))
+B_ext.SetRegion(1, vector(Amp*sinc(2*pi*df*(t-t0))*cos(2*pi*f0*(t-t0)),0,Bstat))
+
+autosave(m, 1e-9)
+
+run(500e-9)

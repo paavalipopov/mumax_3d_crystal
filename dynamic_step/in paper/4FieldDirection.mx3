@@ -1,0 +1,29 @@
+Nx := 1000;
+Ny := 70; 
+Nz := 8;
+sizeX := 20.0e-6;
+sizeY := 1.4e-6;
+sizeZ := 4.0e-6;
+SetPBC(0, 0, 5);
+Depth := 4e-7;
+SetGridSize(Nx, Ny, Nz);
+SetCellSize(sizeX/Nx, sizeY/Ny, sizeZ/Nz);
+
+topLayer := cuboid(sizeX*0.5 + 0.5e-6, 1e-6, sizeZ).transl(-sizeX*0.25 + 0.25e-6, Depth*0.5, 0);
+middleLayer := cuboid(1e-6, Depth, sizeZ);
+bottomLayer := cuboid(sizeX*0.5 + 0.5e-6, 1e-6, sizeZ).transl(sizeX*0.25 - 0.25e-6, -Depth*0.5, 0); 
+stepShape := topLayer.add( middleLayer.add( bottomLayer ) );
+setgeom(stepShape);
+DefRegion(1, stepShape)
+Msat = 1.39e5;
+m = uniform(0, 1, 0);
+alpha = 0.001;
+B_ext = vector(0, 1850e-4, 0);
+relax();
+
+saveas(CropX(CropZ(B_eff, Nz/2, Nz/2+1), Nx/2, Nx/2+1), "H_eff");
+saveas(CropX(CropZ(B_ext, Nz/2, Nz/2+1), Nx/2, Nx/2+1), "H_ext");
+saveas(CropZ(B_eff.region(1), Nz/2, Nz/2+1), "H_eff_full");
+saveas(CropZ(B_demag.region(1), Nz/2, Nz/2+1), "H_demag_full");
+saveas(B_eff, "H_eff_fullest");
+saveas(B_demag, "H_demag_fullest");
